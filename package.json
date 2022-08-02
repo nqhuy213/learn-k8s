@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "add:rest-service": "yarn workspace @nqhuy213/rest-service add --",
-    "exec:rest-service": "yarn workspace @nqhuy213/rest-service exec --"
+    "dev:rest-service": "yarn workspace @nqhuy213/rest-service dev --"
   },
   "keywords": [],
   "author": "Harvey Nguyen <nqhuy213@gmail.com>",
