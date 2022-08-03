@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import {Configuration} from './configuration/Configuration';
 import {IDbContext} from './database/context/IDbContext';
 import {inject, injectable} from 'inversify';
-import {TaskRouter} from './routes/TaskRouter';
+import {TaskRouter} from './routers/TaskRouter';
 import express from 'express';
 import morgan from 'morgan';
 import {MongoContext} from './database/context/MongoContext';
