@@ -15,6 +15,7 @@
     "@typescript-eslint"
   ],
   "rules": {
+    "new-cap": "off",
     "max-len": [
       "error",
       {
