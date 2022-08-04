@@ -10,5 +10,5 @@ export class MongoContext implements IDbContext {
     mongoose.connect(uri, () => {
       console.log('Connected to MongoDB');
     });
-  }
+  };
 }

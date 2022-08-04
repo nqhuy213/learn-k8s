@@ -10,7 +10,7 @@ class Server {
   public bootstrap(): void {
     this._container.configure();
     this._container.getContainer().get(Application).start();
-  }
+  };
 }
 
 const server = new Server();

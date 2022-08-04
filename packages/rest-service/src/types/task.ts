@@ -1,3 +1,3 @@
 export enum TaskType {
-  SCHEDULE = "schedule",
+  SCHEDULE = 'schedule',
 }
