@@ -1,6 +1,6 @@
-import {Application} from './Application';
+import 'module-alias/register';
+import {Application} from './appplication-layer/Application';
 import {DIContainer} from './ioc/DIContainer';
-
 class Server {
   private _container: DIContainer;
   constructor() {

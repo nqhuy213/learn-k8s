@@ -1,13 +1,13 @@
+import {Application} from '@/appplication-layer/Application';
+import {AuthenticationController} from '@/appplication-layer/controllers/AuthenticationController';
+import {AuthenticationRouter} from '@/appplication-layer/routers/AuthenticationRouter';
+import {TaskRouter} from '@/appplication-layer/routers/TaskRouter';
+import {IDbContext} from '@/database/context/IDbContext';
+import {MongoContext} from '@/database/context/MongoContext';
+import {IUserRepository} from '@/database/repository/UserRepository/IUserRepository';
+import {MongoUserRepository} from '@/database/repository/UserRepository/UserRepository';
 import {Container} from 'inversify';
-import {Application} from '../Application';
-import {AuthenticationController} from '../controllers/AuthenticationController';
-import {IDbContext} from '../database/context/IDbContext';
-import {MongoContext} from '../database/context/MongoContext';
-import {IUserRepository} from '../database/repository/UserRepository/IUserRepository';
-import {MongoUserRepository} from '../database/repository/UserRepository/UserRepository';
-import {AuthenticationRouter} from '../routers/AuthenticationRouter';
-import {TaskRouter} from '../routers/TaskRouter';
-import {Types} from './Types';
+import {DITypes} from './DITypes';
 
 
 export class DIContainer {
@@ -26,7 +26,7 @@ export class DIContainer {
     return this._container;
   };
   private bindDbContext = () => {
-    this._container.bind<IDbContext>(Types.IDbContext).to(MongoContext).inSingletonScope();
+    this._container.bind<IDbContext>(DITypes.IDbContext).to(MongoContext).inSingletonScope();
   };
   private bindApplication = () => {
     this._container.bind<Application>(Application).toSelf().inSingletonScope();
@@ -41,6 +41,6 @@ export class DIContainer {
   };
   private bindRepositories = () => {
     this._container
-        .bind<IUserRepository>(Types.IUserRepository).to(MongoUserRepository).inSingletonScope();
+        .bind<IUserRepository>(DITypes.IUserRepository).to(MongoUserRepository).inSingletonScope();
   };
 }

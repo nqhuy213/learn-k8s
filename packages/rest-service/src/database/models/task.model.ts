@@ -1,6 +1,6 @@
 import {prop, getModelForClass, modelOptions, Severity} from '@typegoose/typegoose';
 import {Mixed} from 'mongoose';
-import {TaskType} from '../../types/task';
+import {TaskType} from '../types/task';
 
 @modelOptions({options: {allowMixed: Severity.ALLOW}})
 export class Task {

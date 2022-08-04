@@ -12,7 +12,6 @@ export class AuthenticationController extends BaseController {
       console.log(user);
       return res.status(201).json(user);
     } catch (error) {
-      console.log(error);
       return res.status(400).json(error);
     }
   };

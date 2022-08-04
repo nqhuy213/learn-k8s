@@ -1,12 +1,12 @@
 import 'reflect-metadata';
 import {Configuration} from './configuration/Configuration';
-import {IDbContext} from './database/context/IDbContext';
 import {inject, injectable} from 'inversify';
 import {TaskRouter} from './routers/TaskRouter';
 import express from 'express';
 import morgan from 'morgan';
-import {Types} from './ioc/Types';
 import {AuthenticationRouter} from './routers/AuthenticationRouter';
+import {IDbContext} from '@/database/context/IDbContext';
+import {DITypes} from '@/ioc/DITypes';
 
 @injectable()
 export class Application {
@@ -15,7 +15,7 @@ export class Application {
   constructor(
     @inject(TaskRouter) private _taskRouter: TaskRouter,
     @inject(AuthenticationRouter) private _authenticationRouter: AuthenticationRouter,
-    @inject(Types.IDbContext) private _dbContext: IDbContext,
+    @inject(DITypes.IDbContext) private _dbContext: IDbContext,
   ) {
     this._app = express();
     this.setupMiddleware();
