@@ -2,13 +2,12 @@ import {Application} from '@/appplication-layer/Application';
 import {AuthenticationController} from '@/appplication-layer/controllers/AuthenticationController';
 import {AuthenticationRouter} from '@/appplication-layer/routers/AuthenticationRouter';
 import {TaskRouter} from '@/appplication-layer/routers/TaskRouter';
-import {IDbContext} from '@/database/context/IDbContext';
-import {MongoContext} from '@/database/context/MongoContext';
-import {IUserRepository} from '@/database/repository/UserRepository/IUserRepository';
-import {MongoUserRepository} from '@/database/repository/UserRepository/UserRepository';
+import {IDbContext} from '@/data-layer/context/IDbContext';
+import {MongoContext} from '@/data-layer/context/MongoContext';
+import {IUserRepository} from '@/data-layer/repository/UserRepository/IUserRepository';
+import {MongoUserRepository} from '@/data-layer/repository/UserRepository/UserRepository';
 import {Container} from 'inversify';
 import {DITypes} from './DITypes';
-
 
 export class DIContainer {
   private _container: Container;

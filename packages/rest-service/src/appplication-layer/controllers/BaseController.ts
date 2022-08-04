@@ -1,4 +1,4 @@
-import {IUserRepository} from '@/database/repository/UserRepository/IUserRepository';
+import {IUserRepository} from '@/data-layer/repository/UserRepository/IUserRepository';
 import {DITypes} from '@/ioc/DITypes';
 import {inject, injectable} from 'inversify';
 

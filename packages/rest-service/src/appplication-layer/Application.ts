@@ -5,7 +5,7 @@ import {TaskRouter} from './routers/TaskRouter';
 import express from 'express';
 import morgan from 'morgan';
 import {AuthenticationRouter} from './routers/AuthenticationRouter';
-import {IDbContext} from '@/database/context/IDbContext';
+import {IDbContext} from '@/data-layer/context/IDbContext';
 import {DITypes} from '@/ioc/DITypes';
 
 @injectable()

@@ -6,7 +6,8 @@
   "author": "Harvey Nguyen <nqhuy213@gmail.com>",
   "license": "ISC",
   "scripts": {
-    "dev": "nodemon src/Server.ts"
+    "dev": "nodemon src/Server.ts",
+    "lint": "eslint --fix src/**/*.ts"
   },
   "dependencies": {
     "@typegoose/typegoose": "^9.11.0",

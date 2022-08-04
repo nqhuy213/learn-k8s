@@ -21,6 +21,14 @@
     "**/config/*"
   ],
   "rules": {
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 1,
+        "maxBOF": 0,
+        "maxEOF": 0
+      }
+    ],
     "unused-imports/no-unused-imports-ts": "error",
     "new-cap": "off",
     "max-len": [
