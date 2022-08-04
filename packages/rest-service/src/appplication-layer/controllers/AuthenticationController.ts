@@ -7,8 +7,13 @@ export class AuthenticationController extends BaseController {
   public async register(req: Request, res: Response): Promise<Response> {
     const {name, email, password} = req.body;
     try {
-      const user =
-        await this.dbContext.userRepository.createUser({name, email, passwordHash: password});
+      const user = await this.dbContext.userRepository.createUser(
+          {
+            name,
+            email,
+            passwordHash: password,
+          },
+      );
       return res.status(201).json(user);
     } catch (error) {
       return res.status(400).json(error);
