@@ -1,10 +1,10 @@
+import 'reflect-metadata';
 import {injectable} from 'inversify';
 import mongoose from 'mongoose';
-import {IDbContext} from './IDbContext';
-import 'reflect-metadata';
+import {DbContext} from './DbContext';
 
 @injectable()
-export class MongoContext implements IDbContext {
+export class MongoContext extends DbContext {
   public getConnection(uri: string): void {
     mongoose.connect(uri, () => {
       console.log('Connected to MongoDB');

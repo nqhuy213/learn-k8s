@@ -5,8 +5,7 @@ import {TaskRouter} from './routers/TaskRouter';
 import express from 'express';
 import morgan from 'morgan';
 import {AuthenticationRouter} from './routers/AuthenticationRouter';
-import {IDbContext} from '@/data-layer/context/IDbContext';
-import {DITypes} from '@/ioc/DITypes';
+import {DbContext} from '@/data-layer/context/DbContext';
 
 @injectable()
 export class Application {
@@ -15,7 +14,7 @@ export class Application {
   constructor(
     @inject(TaskRouter) private _taskRouter: TaskRouter,
     @inject(AuthenticationRouter) private _authenticationRouter: AuthenticationRouter,
-    @inject(DITypes.IDbContext) private _dbContext: IDbContext,
+    @inject(DbContext) private _dbContext: DbContext,
   ) {
     this._app = express();
     this.setupMiddleware();

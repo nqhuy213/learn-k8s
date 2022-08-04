@@ -5,11 +5,10 @@ import {BaseController} from './BaseController';
 @injectable()
 export class AuthenticationController extends BaseController {
   public async register(req: Request, res: Response): Promise<Response> {
-    console.log('first');
     const {name, email, password} = req.body;
     try {
-      const user = await this._userRepository.createUser({name, email, passwordHash: password});
-      console.log(user);
+      const user =
+        await this.dbContext.userRepository.createUser({name, email, passwordHash: password});
       return res.status(201).json(user);
     } catch (error) {
       return res.status(400).json(error);
@@ -18,7 +17,7 @@ export class AuthenticationController extends BaseController {
   public async login(req: Request, res: Response) {
     const {email, password} = req.body;
     try {
-      const user = await this._userRepository.getUserByEmail(email);
+      const user = await this.dbContext.userRepository.getUserByEmail(email);
       if (!user) {
         return res.status(404).json({message: 'User not found'});
       }

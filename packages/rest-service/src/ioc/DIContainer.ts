@@ -2,7 +2,7 @@ import {Application} from '@/appplication-layer/Application';
 import {AuthenticationController} from '@/appplication-layer/controllers/AuthenticationController';
 import {AuthenticationRouter} from '@/appplication-layer/routers/AuthenticationRouter';
 import {TaskRouter} from '@/appplication-layer/routers/TaskRouter';
-import {IDbContext} from '@/data-layer/context/IDbContext';
+import {DbContext} from '@/data-layer/context/DbContext';
 import {MongoContext} from '@/data-layer/context/MongoContext';
 import {IUserRepository} from '@/data-layer/repository/UserRepository/IUserRepository';
 import {MongoUserRepository} from '@/data-layer/repository/UserRepository/UserRepository';
@@ -25,7 +25,7 @@ export class DIContainer {
     return this._container;
   };
   private bindDbContext = () => {
-    this._container.bind<IDbContext>(DITypes.IDbContext).to(MongoContext).inSingletonScope();
+    this._container.bind<DbContext>(DbContext).to(MongoContext).inSingletonScope();
   };
   private bindApplication = () => {
     this._container.bind<Application>(Application).toSelf().inSingletonScope();
