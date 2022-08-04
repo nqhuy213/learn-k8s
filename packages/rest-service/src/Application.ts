@@ -6,6 +6,7 @@ import {TaskRouter} from './routers/TaskRouter';
 import express from 'express';
 import morgan from 'morgan';
 import {MongoContext} from './database/context/MongoContext';
+import passport from 'passport';
 
 @injectable()
 export class Application {
@@ -24,6 +25,7 @@ export class Application {
     this._app.use(express.json());
     this._app.use(express.urlencoded({extended: true}));
     this._app.use(morgan('combined'));
+    this._app.use(passport.initialize());
   }
 
   private setupRoutes(): void {
