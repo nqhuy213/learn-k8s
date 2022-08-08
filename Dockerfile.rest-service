@@ -1,0 +1,15 @@
+FROM node:14
+
+WORKDIR /scheduler
+
+COPY ./package.json ./
+COPY ./yarn.lock ./
+COPY lerna.json ./
+
+COPY ./packages/rest-service/package.json ./packages/rest-service/
+
+RUN yarn
+
+COPY ./packages/rest-service/ ./packages/rest-service/
+
+CMD [ "yarn", "dev:rest" ]

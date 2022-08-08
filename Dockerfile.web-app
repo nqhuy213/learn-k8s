@@ -1,0 +1,15 @@
+FROM node:14
+
+WORKDIR /scheduler
+
+COPY ./package.json ./
+COPY ./yarn.lock ./
+COPY lerna.json ./
+
+COPY ./packages/web-app/package.json ./packages/web-app/
+
+RUN yarn
+
+COPY ./packages/web-app/ ./packages/web-app/
+
+CMD [ "yarn", "dev:web" ]

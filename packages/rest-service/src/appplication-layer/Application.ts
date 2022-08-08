@@ -40,7 +40,7 @@ export class Application {
     this._app.use(express.urlencoded({extended: true}));
     this._app.use(morgan('combined'));
     this._app.use(cors({
-      origin: 'http://localhost:3000',
+      origin: '*',
     }));
     this._app.use(async (_req, res, next) => {
       res.header('Access-Control-Allow-Credentials', 'true');
@@ -49,7 +49,7 @@ export class Application {
           'Origin, X-Requested-With, Content-Type, Accept, authorization',
       );
       res.header('Access-Control-Allow-Methods', 'GET,POST,DELETE,PUT,OPTIONS');
-      res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+      res.header('Access-Control-Allow-Origin', '*');
       next();
     });
   };
