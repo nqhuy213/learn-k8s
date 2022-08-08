@@ -7,6 +7,12 @@ down:
 into-rest:
 	docker-compose exec rest-service bash
 
+logs-rest:
+	docker-compose logs -f rest-service
+
+logs-web:
+	docker-compose logs -f web-app
+
 logs:
 	docker-compose logs -f
 

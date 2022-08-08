@@ -38,7 +38,7 @@ export class Application {
   private setupMiddleware(): void {
     this._app.use(express.json());
     this._app.use(express.urlencoded({extended: true}));
-    this._app.use(morgan('combined'));
+    this._app.use(morgan('dev'));
     this._app.use(cors({
       origin: '*',
     }));

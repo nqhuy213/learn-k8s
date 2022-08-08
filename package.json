@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "add:rest": "yarn workspace @nqhuy213/rest-service add --",
+    "add:web": "yarn workspace @nqhuy213/web-app add --",
     "dev:rest": "yarn workspace @nqhuy213/rest-service dev --",
     "dev:web": "yarn workspace @nqhuy213/web-app start --"
   },
