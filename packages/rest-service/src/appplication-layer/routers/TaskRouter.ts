@@ -5,6 +5,7 @@ import {BaseRouter} from './BaseRouter';
 export class TaskRouter extends BaseRouter {
   protected override configure(): void {
     this._router.get('/', (req, res) => {
+      console.log(req.headers.cookie);
       res.send('Hello World!');
     });
   };

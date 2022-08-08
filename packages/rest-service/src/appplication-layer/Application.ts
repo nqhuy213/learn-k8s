@@ -6,6 +6,8 @@ import express from 'express';
 import morgan from 'morgan';
 import {AuthenticationRouter} from './routers/AuthenticationRouter';
 import {DbContext} from '@/data-layer/context/DbContext';
+import * as firebaseAdmin from 'firebase-admin';
+import cors from 'cors';
 
 @injectable()
 export class Application {
@@ -17,14 +19,39 @@ export class Application {
     @inject(DbContext) private _dbContext: DbContext,
   ) {
     this._app = express();
+    this.setupFirebase();
     this.setupMiddleware();
     this.setupRoutes();
+  }
+
+  private setupFirebase(): void {
+    firebaseAdmin.initializeApp({
+      credential: firebaseAdmin.credential.cert({
+        projectId: Configuration.FIREBASE_PROJECT_ID,
+        clientEmail: Configuration.FIREBASE_CLIENT_EMAIL,
+        privateKey: Configuration.FIREBASE_PRIVATE_KEY,
+      }),
+    });
+    console.log('Firebase is initialized');
   }
 
   private setupMiddleware(): void {
     this._app.use(express.json());
     this._app.use(express.urlencoded({extended: true}));
     this._app.use(morgan('combined'));
+    this._app.use(cors({
+      origin: 'http://localhost:3000',
+    }));
+    this._app.use(async (_req, res, next) => {
+      res.header('Access-Control-Allow-Credentials', 'true');
+      res.header(
+          'Access-Control-Allow-Headers',
+          'Origin, X-Requested-With, Content-Type, Accept, authorization',
+      );
+      res.header('Access-Control-Allow-Methods', 'GET,POST,DELETE,PUT,OPTIONS');
+      res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+      next();
+    });
   };
 
   private setupRoutes(): void {

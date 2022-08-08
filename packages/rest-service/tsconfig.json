@@ -19,6 +19,7 @@
     "types": [
       "reflect-metadata"
     ],
+    "resolveJsonModule": true /* Resolve modules referenced by `package.json` files. */,
     "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {

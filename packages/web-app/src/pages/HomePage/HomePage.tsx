@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom'
-import { signOut } from '../../firebase-config'
+import {Link} from 'react-router-dom';
+import {signOut} from '../../firebase-config';
 
 export default function HomePage() {
   const handleLogout = () => {
-    signOut()
-  }
+    signOut();
+  };
   return (
     <div>
       HomePage Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam voluptatibus
@@ -13,5 +13,5 @@ export default function HomePage() {
       <Link to="/auth/login">Login</Link>
       <button onClick={handleLogout}>Logout</button>
     </div>
-  )
+  );
 }

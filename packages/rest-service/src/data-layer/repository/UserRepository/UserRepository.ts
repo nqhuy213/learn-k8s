@@ -4,6 +4,9 @@ import {IUserRepository} from './IUserRepository';
 
 @injectable()
 export class MongoUserRepository implements IUserRepository {
+  public async getUserById(id: string): Promise<User | null> {
+    return await UserModel.findOne({uid: id});
+  }
   public async getUserByEmail(email: string): Promise<User | null> {
     return await UserModel.findOne({email});
   };

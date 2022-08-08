@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from 'firebase/app'
+import {initializeApp} from 'firebase/app';
 import {
   FacebookAuthProvider,
   getAuth,
@@ -7,7 +7,7 @@ import {
   signInWithPopup,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-} from 'firebase/auth'
+} from 'firebase/auth';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -21,18 +21,18 @@ const firebaseConfig = {
   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
-}
+};
 
 // Initialize Firebase
-initializeApp(firebaseConfig)
+initializeApp(firebaseConfig);
 
-export const auth = getAuth()
-const googleProvider = new GoogleAuthProvider()
-const facebookProvider = new FacebookAuthProvider()
-export const signInWithGoogle = () => signInWithPopup(auth, googleProvider)
-export const signInWithFacebook = () => signInWithPopup(auth, facebookProvider)
+export const auth = getAuth();
+const googleProvider = new GoogleAuthProvider();
+const facebookProvider = new FacebookAuthProvider();
+export const signInWithGoogle = () => signInWithPopup(auth, googleProvider);
+export const signInWithFacebook = () => signInWithPopup(auth, facebookProvider);
 export const signInWithEmail = (email: string, password: string) =>
-  signInWithEmailAndPassword(auth, email, password)
+  signInWithEmailAndPassword(auth, email, password);
 export const registerWithEmail = (email: string, password: string) =>
-  createUserWithEmailAndPassword(auth, email, password)
-export const signOut = () => auth.signOut()
+  createUserWithEmailAndPassword(auth, email, password);
+export const signOut = () => auth.signOut();

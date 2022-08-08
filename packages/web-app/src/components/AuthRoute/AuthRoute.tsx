@@ -1,4 +1,4 @@
-import { Navigate, Outlet } from 'react-router-dom'
+import {Navigate, Outlet} from 'react-router-dom';
 
 interface Props {
   redirect: string
@@ -6,5 +6,5 @@ interface Props {
 }
 
 export default function AuthRoute(props: Props) {
-  return props.authed ? <Outlet /> : <Navigate to={props.redirect} />
+  return props.authed ? <Outlet /> : <Navigate to={props.redirect} />;
 }
