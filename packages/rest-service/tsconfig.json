@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "outDir": "./build",
+    "outDir": "./dist",
     "target": "es2018" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
     "lib": [
       "es2018",

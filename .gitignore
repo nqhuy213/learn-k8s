@@ -2,3 +2,6 @@
 **/config/
 **/.env*
 **/firebase-cred.json
+.vscode
+**/build/
+**/dist/
