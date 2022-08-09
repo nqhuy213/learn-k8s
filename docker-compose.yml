@@ -6,6 +6,8 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile.rest-service
+    environment:
+      - NODE_ENV=development
     ports:
       - "3001:3001"
     expose:

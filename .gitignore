@@ -1,6 +1,6 @@
 **/node_modules/
 **/config/development.ts
-**/.env*
+**/.env
 **/firebase-cred.json
 .vscode
 **/build/

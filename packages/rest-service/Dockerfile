@@ -1,4 +1,4 @@
-FROM node:14 as builder
+FROM node:14-alpine as builder
 WORKDIR /scheduler/rest-service
 COPY ./package.json ./
 COPY tsconfig.json ./

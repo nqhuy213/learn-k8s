@@ -1,4 +1,5 @@
 import 'module-alias/register';
+import 'dotenv/config';
 import {Application} from './appplication-layer/Application';
 import {DIContainer} from './ioc/DIContainer';
 
