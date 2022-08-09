@@ -1,9 +1,8 @@
-import config from 'config';
-
 export class Configuration {
-  public static readonly PORT: number = config.get<number>('port');
-  public static readonly DATABASE_URI: string = config.get<string>('databaseUri');
-  public static readonly FIREBASE_PROJECT_ID: string = config.get<string>('firebaseProjectId');
-  public static readonly FIREBASE_CLIENT_EMAIL: string = config.get<string>('firebaseClientEmail');
-  public static readonly FIREBASE_PRIVATE_KEY: string = config.get<string>('firebasePrivateKey');
+  public static readonly PORT: string = process.env.PORT as string;
+  public static readonly DATABASE_URI: string = process.env.DATABASE_URI as string;
+  public static readonly FIREBASE_PROJECT_ID: string = process.env.FIREBASE_PROJECT_ID as string;
+  public static readonly FIREBASE_CLIENT_EMAIL: string =
+    process.env.FIREBASE_CLIENT_EMAIL as string;
+  public static readonly FIREBASE_PRIVATE_KEY: string = process.env.FIREBASE_PRIVATE_KEY as string;
 }

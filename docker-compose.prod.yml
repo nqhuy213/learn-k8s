@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  rest-service:
+    container_name: rest-service
+    build:
+      context: ./packages/rest-service
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    expose:
+      - 3001
+    links:
+      - mongodb
+
+  web-app:
+    container_name: web-app
+    build:
+      context: ./packages/web-app
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    expose:
+      - 80
+    links:
+      - rest-service
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"

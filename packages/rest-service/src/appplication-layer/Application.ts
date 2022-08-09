@@ -8,6 +8,11 @@ import {AuthenticationRouter} from './routers/AuthenticationRouter';
 import {DbContext} from '@/data-layer/context/DbContext';
 import * as firebaseAdmin from 'firebase-admin';
 import cors from 'cors';
+import * as dotenv from 'dotenv';
+
+if (process.env.NODE_ENV === 'development') {
+  dotenv.config();
+}
 
 @injectable()
 export class Application {
