@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rest-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rest-service-app
+  template:
+    metadata:
+      labels:
+        app: rest-service-app
+    spec:
+      containers:
+        - image: nqhuy213/scheduler-rest-service:__VERSION__
+          name: scheduler-rest-service-container
+          ports:
+            - containerPort: 3001
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 100m
+              memory: 100Mi

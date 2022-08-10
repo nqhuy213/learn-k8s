@@ -1,9 +1,10 @@
 export class Constants {
-  public static readonly apiUrl = 'http://localhost:3001';
-  public static readonly firebaseApiKey = 'AIzaSyALKOiPzA4fhd73CDqWiOubQN7L7v2Epnw';
-  public static readonly firebaseAuthDomain = 'sokie-app-local.firebaseapp.com';
-  public static readonly firebaseProjectId = 'sokie-app-local';
-  public static readonly firebaseStorageBucket = 'sokie-app-local.appspot.com';
-  public static readonly firebaseMessagingSenderId ='179289142017';
-  public static readonly firebaseAppId = '1:179289142017:web:f78a98bc6a6e6939d76100';
+  public static readonly apiUrl = process.env.REACT_APP_API_URL;
+  public static readonly firebaseApiKey = process.env.REACT_APP_FIREBASE_API_KEY;
+  public static readonly firebaseAuthDomain = process.env.REACT_APP_FIREBASE_AUTH_DOMAIN;
+  public static readonly firebaseProjectId = process.env.REACT_APP_FIREBASE_PROJECT_ID;
+  public static readonly firebaseStorageBucket = process.env.REACT_APP_FIREBASE_STORAGE_BUCKET;
+  public static readonly firebaseMessagingSenderId =
+    process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID;
+  public static readonly firebaseAppId = process.env.REACT_APP_FIREBASE_APP_ID;
 }
