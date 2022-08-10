@@ -1,8 +1,8 @@
 install-rest:
-	cd ./packages/rest-service && npm install && cd ../..
+	cd ./packages/api && npm install && cd ../..
 
 install-web:
-	cd ./packages/web-app && npm install && cd ../..
+	cd ./packages/web && npm install && cd ../..
 
 install: install-rest install-web
 
