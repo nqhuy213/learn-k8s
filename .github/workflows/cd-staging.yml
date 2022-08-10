@@ -1,0 +1,32 @@
+name: Continuous Deployment for Staging
+
+on:
+  push:
+    branches: ["develop"]
+
+  workflow_dispatch:
+
+jobs:
+  build-deploy-gke:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_REPOSITORY: nqhuy213
+      WEB_IMAGE_NAME: scheduler-web
+      REST_IMAGE_NAME: scheduler-rest
+      IMAGE_TAG: ${{ github.sha }}
+
+    steps:
+      - uses: "actions/checkout@v3"
+
+      - id: "auth-gcp"
+        name: "Authenticate to Google Cloud"
+        uses: "google-github-actions/auth@v0"
+        with:
+          workload_identity_provider: "projects/337352927/locations/global/workloadIdentityPools/github-action-wif/providers/gha-provider"
+          service_account: "harvey@task-scheduler-staging.iam.gserviceaccount.com"
+
+      - name: "Set up Cloud SDK"
+        uses: "google-github-actions/setup-gcloud@v0"
+
+      - name: "Use gcloud CLI"
+        run: "gcloud info"
