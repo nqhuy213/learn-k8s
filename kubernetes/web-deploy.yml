@@ -13,7 +13,7 @@ spec:
         app: web-app
     spec:
       containers:
-        - image: nqhuy213/scheduler-web-app:__VERSION__
+        - image: __DOCKER_REPOSITORY__/__WEB_IMAGE_NAME__:__IMAGE_TAG__
           name: scheduler-web-app-container
           imagePullPolicy: IfNotPresent
           resources:

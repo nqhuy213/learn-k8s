@@ -13,7 +13,7 @@ spec:
         app: rest-service-app
     spec:
       containers:
-        - image: nqhuy213/scheduler-rest-service:__VERSION__
+        - image: __DOCKER_REPOSITORY__/__REST_IMAGE_NAME__:__IMAGE_TAG__
           name: scheduler-rest-service-container
           ports:
             - containerPort: 3001
@@ -25,3 +25,6 @@ spec:
             limits:
               cpu: 100m
               memory: 100Mi
+          envFrom:
+            - configMapRef:
+                name: rest-config
