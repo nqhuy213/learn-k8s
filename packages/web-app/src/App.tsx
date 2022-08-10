@@ -17,6 +17,7 @@ export default function App() {
 
   useEffect(() => {
     const auth = getAuth();
+    console.log('object');
     onAuthStateChanged(auth, async (currentUser) => {
       if (!currentUser) {
         setUser(null);

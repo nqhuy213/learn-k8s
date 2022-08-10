@@ -1,3 +1,11 @@
+install-rest:
+	cd ./packages/rest-service && npm install && cd ../..
+
+install-web:
+	cd ./packages/web-app && npm install && cd ../..
+
+install: install-rest install-web
+
 up:
 	docker compose up -d --force-recreate 
 

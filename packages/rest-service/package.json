@@ -6,7 +6,7 @@
   "author": "Harvey Nguyen <nqhuy213@gmail.com>",
   "license": "ISC",
   "scripts": {
-    "dev": "nodemon src/Server.ts",
+    "dev": "npx nodemon src/Server.ts",
     "lint": "eslint --fix src/**/*.ts",
     "start": "ts-node dist/Server.js",
     "build": "tsc -p ./tsconfig.json && tsc-alias"

@@ -4,8 +4,8 @@ services:
   rest-service:
     container_name: rest-service
     build:
-      context: ./
-      dockerfile: Dockerfile.rest-service
+      context: ./packages/rest-service
+      dockerfile: Dockerfile.dev
     environment:
       - NODE_ENV=development
     ports:
@@ -13,29 +13,28 @@ services:
     expose:
       - 3001
     volumes:
-      - ./node_modules:/scheduler/node_modules
-      - ./package.json:/scheduler/package.json
-      - ./packages/rest-service:/scheduler/packages/rest-service
+      - ./packages/rest-service:/scheduler/rest-service
     links:
       - mongodb
     depends_on:
       - mongodb
 
   web-app:
+    environment:
+      - NODE_ENV=development
+      - WATCHPACK_POLLING=true
     container_name: web-app
     build:
-      context: ./
-      dockerfile: Dockerfile.web-app
+      context: ./packages/web-app
+      dockerfile: Dockerfile.dev
     ports:
       - "3000:3000"
     expose:
       - 3000
-    links:
+    links: 
       - rest-service
     volumes:
-      - ./node_modules:/scheduler/node_modules
-      - ./package.json:/scheduler/package.json
-      - ./packages/web-app:/scheduler/packages/web-app
+      - ./packages/web-app:/scheduler/web-app
 
   mongodb:
     image: mongo
