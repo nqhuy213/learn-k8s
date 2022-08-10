@@ -1,6 +1,6 @@
 FROM node:14-alpine
 
-WORKDIR /scheduler/rest-service
+WORKDIR /app/api
 
 COPY ./package.json ./
 COPY *./package-lock.json ./

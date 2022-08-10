@@ -8,8 +8,8 @@ interface RequestArgs<Body extends object> {
 
 export class ApiService {
   private readonly baseUrl: string;
-  public constructor(baseUrl: string) {
-    this.baseUrl = baseUrl;
+  public constructor() {
+    this.baseUrl = '/api';
   }
   private async makeHttpRequest<R, Body extends object = object>(
       args: RequestArgs<Body>,

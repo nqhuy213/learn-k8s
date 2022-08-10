@@ -1,5 +1,4 @@
 export class Constants {
-  public static readonly apiUrl = process.env.REACT_APP_API_URL as string;
   public static readonly firebaseApiKey = process.env.REACT_APP_FIREBASE_API_KEY as string;
   public static readonly firebaseAuthDomain = process.env.REACT_APP_FIREBASE_AUTH_DOMAIN as string;
   public static readonly firebaseProjectId = process.env.REACT_APP_FIREBASE_PROJECT_ID as string;

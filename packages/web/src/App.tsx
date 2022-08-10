@@ -1,4 +1,5 @@
 import {getAuth, onAuthStateChanged} from 'firebase/auth';
+import moment from 'moment';
 import {useEffect, useState} from 'react';
 import {Routes, Route} from 'react-router-dom';
 import {AuthRoute} from './components/AuthRoute';
@@ -17,7 +18,7 @@ export default function App() {
 
   useEffect(() => {
     const auth = getAuth();
-    console.log('object');
+    console.log(moment().format('MMMM Do YYYY, h:mm:ss a'));
     onAuthStateChanged(auth, async (currentUser) => {
       if (!currentUser) {
         setUser(null);

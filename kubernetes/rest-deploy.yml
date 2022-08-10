@@ -18,13 +18,6 @@ spec:
           ports:
             - containerPort: 3001
           imagePullPolicy: IfNotPresent
-          resources:
-            requests:
-              cpu: 100m
-              memory: 100Mi
-            limits:
-              cpu: 100m
-              memory: 100Mi
           envFrom:
             - configMapRef:
                 name: rest-config

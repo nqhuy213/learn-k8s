@@ -18,7 +18,7 @@ ENV REACT_APP_FIREBASE_MESSAGING_SENDER_ID ${REACT_APP_FIREBASE_MESSAGING_SENDER
 ENV REACT_APP_FIREBASE_APP_ID ${REACT_APP_FIREBASE_APP_ID}
 
 # Add a work directory
-WORKDIR /scheduler/web-app
+WORKDIR /app/web
 # Cache and Install dependencies
 COPY package.json .
 RUN yarn install --production
@@ -28,10 +28,10 @@ COPY . .
 RUN yarn build
 
 # Bundle static assets with nginx
-FROM nginx:1.21.0-alpine as production
+FROM nginx:1.23.1-alpine as production
 ENV NODE_ENV production
 # Copy built assets from builder
-COPY --from=builder /scheduler/web-app/build /usr/share/nginx/html
+COPY --from=builder /app/web/build /usr/share/nginx/html
 # Add your nginx.conf
 COPY /etc/nginx.conf /etc/nginx/conf.d/default.conf
 # Expose port

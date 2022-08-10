@@ -9,17 +9,23 @@ install: install-rest install-web
 up:
 	docker compose up -d --force-recreate 
 
+up-build:
+	docker compose up -d --force-recreate --build
+
 down:
 	docker compose down
 
-into-rest:
-	docker compose exec rest-service bash
+into-api:
+	docker compose exec api bash
 
-logs-rest:
-	docker compose logs -f rest-service
+logs-api:
+	docker compose logs -f api
 
 logs-web:
-	docker compose logs -f web-app
+	docker compose logs -f web
+
+logs-nginx:
+	docker compose logs -f nginx
 
 logs:
 	docker compose logs -f

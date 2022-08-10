@@ -6,4 +6,4 @@
 **/build/
 **/dist/
 **/*.sh
-kubernetes-local/
+kubernetes-local

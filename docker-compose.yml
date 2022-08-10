@@ -1,43 +1,48 @@
 version: "3"
 
 services:
-  rest-service:
-    container_name: rest-service
-    build:
-      context: ./packages/rest-service
-      dockerfile: Dockerfile.dev
-    environment:
-      - NODE_ENV=development
-    ports:
-      - "3001:3001"
-    expose:
-      - 3001
-    volumes:
-      - ./packages/rest-service:/scheduler/rest-service
-    links:
-      - mongodb
-    depends_on:
-      - mongodb
-
-  web-app:
-    environment:
-      - NODE_ENV=development
-      - WATCHPACK_POLLING=true
-    container_name: web-app
-    build:
-      context: ./packages/web-app
-      dockerfile: Dockerfile.dev
-    ports:
-      - "3000:3000"
-    expose:
-      - 3000
-    links: 
-      - rest-service
-    volumes:
-      - ./packages/web-app:/scheduler/web-app
-
   mongodb:
     image: mongo
     container_name: mongodb
     ports:
       - "27017:27017"
+  nginx:
+    container_name: nginx
+    links:
+      - api
+      - web
+    restart: always
+    build:
+      context: packages/nginx
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./packages/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "3000:80"
+
+  api:
+    container_name: api
+    build:
+      context: ./packages/api
+      dockerfile: Dockerfile.dev
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - /app/node_modules
+      - ./packages/api:/app/api
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+
+  web:
+    environment:
+      - NODE_ENV=development
+      - WATCHPACK_POLLING=true
+    container_name: web
+    build:
+      context: ./packages/web
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - ./packages/web:/app/web

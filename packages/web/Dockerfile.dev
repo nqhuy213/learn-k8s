@@ -1,6 +1,6 @@
 FROM node:14-alpine
 
-WORKDIR /scheduler/web-app
+WORKDIR /app/web
 
 COPY ./package.json ./
 COPY *./package-lock.json ./
