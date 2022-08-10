@@ -14,6 +14,9 @@ jobs:
       WEB_IMAGE_NAME: scheduler-web
       REST_IMAGE_NAME: scheduler-rest
       IMAGE_TAG: ${{ github.sha }}
+    permissions:
+      contents: "read"
+      id-token: "write"
 
     steps:
       - uses: "actions/checkout@v3"
