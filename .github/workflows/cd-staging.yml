@@ -1,4 +1,4 @@
-name: Continuous Deployment for Staging
+name: Continuous Delivery for Staging
 
 on:
   push:
@@ -7,21 +7,34 @@ on:
   workflow_dispatch:
 
 env:
+  STACK_NAME: harvey-eks-stack
   DOCKER_REPOSITORY: nqhuy213
   WEB_IMAGE_NAME: scheduler-web
-  REST_IMAGE_NAME: scheduler-rest
+  REST_IMAGE_NAME: scheduler-api
   IMAGE_TAG: ${{ github.sha }}
-  REST_PORT: ${{ secrets.REST_PORT }}
-  DATABASE_URI: ${{ secrets.DATABASE_URI }}
+  AWS_REGION: us-west-2
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
   FIREBASE_CLIENT_EMAIL: ${{ secrets.FIREBASE_CLIENT_EMAIL }}
   FIREBASE_CLIENT_ID: ${{ secrets.FIREBASE_CLIENT_ID }}
   FIREBASE_PRIVATE_KEY: ${{ secrets.FIREBASE_PRIVATE_KEY }}
 
 jobs:
-  build-deploy-gke:
+  provision-infrastructure:
+    name: Provision infrastructure with AWS CloudFormation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: "actions/checkout@v3"
+      - name: Create or update Clouformation stack
+        working-directory: ./infrastructure
+        run: |
+          aws cloudformation describe-stacks \
+            --region ${{ env.AWS_REGION }} \
+            --stack-name ${{ env.STACK_NAME }} \
+
+  build-deploy-eks:
+    name: Deploy to AWS EKS
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -42,33 +55,33 @@ jobs:
       # - name: "Use gcloud CLI"
       #   run: "gcloud info"
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          role-to-assume: ${{ secrets.AWS_ROLE }}
-          aws-region: us-west-2
+      # - name: Configure AWS credentials
+      #   uses: aws-actions/configure-aws-credentials@v1
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     role-to-assume: ${{ secrets.AWS_ROLE }}
+      #     aws-region: us-west-2
 
-      - name: Setup EKS Kubectl
-        uses: zachguo/setup-eks-kubectl@v1
-        with:
-          cluster: ${{ secrets.CLUSTER_NAME }} # name of your EKS cluster
-          region: us-west-2 # region of your EKS cluster
+      # - name: Setup EKS Kubectl
+      #   uses: zachguo/setup-eks-kubectl@v1
+      #   with:
+      #     cluster: ${{ secrets.CLUSTER_NAME }} # name of your EKS cluster
+      #     region: us-west-2 # region of your EKS cluster
 
-      - uses: cschleiden/replace-tokens@v1
-        with:
-          files: '["kubernetes/*.yaml"]'
-          tokenPrefix: __ # optional, default is #{
-          tokenSuffix: __ # optional, default is }#
-        env:
-          IMAGE_TAG: ${{ env.IMAGE_TAG }}
-          DOCKER_REPOSITORY: ${{ env.DOCKER_REPOSITORY }}
-          REST_IMAGE_NAME: ${{ env.REST_IMAGE_NAME }}
-          WEB_IMAGE_NAME: ${{ env.WEB_IMAGE_NAME }}
-          PORT: ${{ env.PORT }}
-          DATABASE_URI: ${{ env.DATABASE_URI }}
-          FIREBASE_PROJECT_ID: ${{ env.FIREBASE_PROJECT_ID }}
-          FIREBASE_CLIENT_EMAIL: ${{ env.FIREBASE_CLIENT_EMAIL }}
-          FIREBASE_CLIENT_ID: ${{ env.FIREBASE_CLIENT_ID }}
-          FIREBASE_PRIVATE_KEY: ${{ env.FIREBASE_PRIVATE_KEY }}
+      # - uses: cschleiden/replace-tokens@v1
+      #   with:
+      #     files: '["kubernetes/*.yaml"]'
+      #     tokenPrefix: __ # optional, default is #{
+      #     tokenSuffix: __ # optional, default is }#
+      #   env:
+      #     IMAGE_TAG: ${{ env.IMAGE_TAG }}
+      #     DOCKER_REPOSITORY: ${{ env.DOCKER_REPOSITORY }}
+      #     REST_IMAGE_NAME: ${{ env.REST_IMAGE_NAME }}
+      #     WEB_IMAGE_NAME: ${{ env.WEB_IMAGE_NAME }}
+      #     PORT: ${{ env.PORT }}
+      #     DATABASE_URI: ${{ env.DATABASE_URI }}
+      #     FIREBASE_PROJECT_ID: ${{ env.FIREBASE_PROJECT_ID }}
+      #     FIREBASE_CLIENT_EMAIL: ${{ env.FIREBASE_CLIENT_EMAIL }}
+      #     FIREBASE_CLIENT_ID: ${{ env.FIREBASE_CLIENT_ID }}
+      #     FIREBASE_PRIVATE_KEY: ${{ env.FIREBASE_PRIVATE_KEY }}

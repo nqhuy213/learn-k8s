@@ -4,8 +4,8 @@ metadata:
   name: api-config
 type: Opaque
 stringData:
-  PORT: __PORT__
-  DATABASE_URI: __DATABASE_URI__
+  PORT: "3001"
+  DATABASE_URI: "mongodb://mongodb-cluster-ip-service:27017/testdb"
   FIREBASE_PROJECT_ID: __FIREBASE_PROJECT_ID__
   FIREBASE_CLIENT_EMAIL: __FIREBASE_CLIENT_EMAIL__
   FIREBASE_CLIENT_ID: __FIREBASE_CLIENT_ID__
