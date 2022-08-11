@@ -28,7 +28,7 @@ Resources:
       AmiType: AL2_x86_64
       CapacityType: ON_DEMAND
       DiskSize: 20
-      ClusterName: !GetAtt HarveyEKSCluster.Name
+      ClusterName: !Ref ClusterName
       NodegroupName: harvey-eks-cluster-nodegroup
       NodeRole: "arn:aws:iam::527728718473:role/AmazonEKSNodeRole"
       Subnets:
@@ -38,6 +38,7 @@ Resources:
         DesiredSize: 1
         MaxSize: 1
         MinSize: 1
+    DependsOn: HarveyEKSCluster
 
   HarveyEKSClusterRole:
     Type: AWS::IAM::Role
