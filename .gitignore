@@ -6,4 +6,4 @@
 **/build/
 **/dist/
 **/setup-env.sh
-kubernetes-local
+k8s-local

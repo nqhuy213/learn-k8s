@@ -1,21 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: todo-client-app-deploy
+  name: web-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: web-app
+      component: web
   template:
     metadata:
       labels:
-        app: web-app
+        component: web
     spec:
       containers:
-        - image: __DOCKER_REPOSITORY__/__WEB_IMAGE_NAME__:__IMAGE_TAG__
-          name: scheduler-web-app-container
-          imagePullPolicy: IfNotPresent
+        - name: web
+          image: nqhuy213/scheduler-web:1.0.0
+          ports:
+            - containerPort: 3000
+          imagePullPolicy: Always
           resources:
             requests:
               cpu: 100m

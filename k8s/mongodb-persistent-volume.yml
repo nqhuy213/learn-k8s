@@ -1,11 +1,11 @@
-k-apiVersion: v1
+apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: mongo-persistent-volume
+  name: mongodb-persistent-volume
 spec:
   accessModes:
     - ReadWriteMany
   capacity:
     storage: 1G
   hostPath:
-    path: /tmp/mongo-persistent-volume
+    path: /tmp/mongodb-persistent-volume

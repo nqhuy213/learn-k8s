@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: api
+  template:
+    metadata:
+      labels:
+        component: api
+    spec:
+      containers:
+        - image: nqhuy213/scheduler-api:1.0.0
+          name: api
+          ports:
+            - containerPort: 3001
+          imagePullPolicy: Always
+          envFrom:
+            - secretRef:
+                name: api-config
+          env:
+            - name: PORT
+              valueFrom:
+                secretKeyRef:
+                  name: api-config
+                  key: PORT
+                  optional: false
+
+            - name: DATABASE_URI
+              valueFrom:
+                secretKeyRef:
+                  name: api-config
+                  key: DATABASE_URI
+                  optional: false
+
+            - name: FIREBASE_PROJECT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: api-config
+                  key: FIREBASE_PROJECT_ID
+                  optional: false
+
+            - name: FIREBASE_CLIENT_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: api-config
+                  key: FIREBASE_CLIENT_EMAIL
+                  optional: false
+
+            - name: FIREBASE_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: api-config
+                  key: FIREBASE_PRIVATE_KEY
+                  optional: false
+
+            - name: FIREBASE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: api-config
+                  key: FIREBASE_CLIENT_ID
+                  optional: false
