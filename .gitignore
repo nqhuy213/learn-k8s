@@ -5,5 +5,5 @@
 .vscode
 **/build/
 **/dist/
-**/*.sh
+**/setup-env.sh
 kubernetes-local
