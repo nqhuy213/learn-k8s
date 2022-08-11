@@ -1,0 +1,61 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Infrastructure for the EKS cluster
+
+Parameters:
+  ClusterName:
+    Type: String
+    Description: Name of the EKS cluster
+    Default: harvey-eks-cluster
+
+Resources:
+  HarveyEKSCluster:
+    Type: AWS::EKS::Cluster
+    Properties:
+      Name: !Ref ClusterName
+      RoleArn: !GetAtt HarveyEKSClusterRole.Arn
+      ResourcesVpcConfig:
+        SubnetIds:
+          - "subnet-07d382e3a5cc6e23f"
+          - "subnet-0fabb205d6946604c"
+        SecurityGroupIds:
+          - "sg-010ef08b4ab5c360a"
+        EndpointPrivateAccess: true
+        EndpointPublicAccess: true
+
+  HarveyEKSClusterNodegroup:
+    Type: AWS::EKS::Nodegroup
+    Properties:
+      AmiType: AL2_x86_64
+      CapacityType: ON_DEMAND
+      DiskSize: 20
+      ClusterName: !GetAtt HarveyEKSCluster.Name
+      NodegroupName: harvey-eks-cluster-nodegroup
+      NodeRole: "arn:aws:iam::527728718473:role/AmazonEKSNodeRole"
+      Subnets:
+        - "subnet-07d382e3a5cc6e23f"
+        - "subnet-0fabb205d6946604c"
+      ScalingConfig:
+        DesiredSize: 1
+        MaxSize: 1
+        MinSize: 1
+
+  HarveyEKSClusterRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - eks.amazonaws.com
+            Action:
+              - "sts:AssumeRole"
+      Description: Role to provide access to the EKS cluster
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+        - "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+        - "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+        - "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
+        - "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+      RoleName: harvey-eks-cluster-role
