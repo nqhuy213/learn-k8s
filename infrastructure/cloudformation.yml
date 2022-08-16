@@ -8,6 +8,85 @@ Parameters:
     Default: harvey-eks-cluster
 
 Resources:
+  HarveyEKSVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/26
+
+  HarveyEKSInternetGateway:
+    Type: AWS::EC2::InternetGateway
+    DependsOn: HarveyEKSVPC
+
+  HarveyEKSInternetGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref HarveyEKSVPC
+      InternetGatewayId: !Ref HarveyEKSInternetGateway
+
+  HarveyEKSPrivateSubnetA:
+    Type: AWS::EC2::Subnet
+    Properties:
+      CidrBlock: 10.0.0.0/27
+      VpcId: !Ref HarveyEKSVPC
+      AvailabilityZone: us-west-2a
+
+  HarveyEKSPublicSubnetA:
+    Type: AWS::EC2::Subnet
+    Properties:
+      CidrBlock: 10.0.0.32/27
+      VpcId: !Ref HarveyEKSVPC
+      AvailabilityZone: us-west-2a
+
+  HarveyEKSNATGateway:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      AllocationId: !GetAtt HarveyEKSElasticIPAddress.AllocationId
+      SubnetId: !Ref HarveyEKSPublicSubnetA
+
+  HarveyEKSElasticIPAddress:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: VPC
+
+  HarveyEKSPrivateRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref HarveyEKSVPC
+
+  HarveyEKSPrivateRoute:
+    Type: AWS::EC2::Route
+    DependsOn: HarveyEKSNATGateway
+    Properties:
+      RouteTableId: !Ref HarveyEKSPrivateRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId: !Ref HarveyEKSNATGateway
+
+  HarveyEKSPublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref HarveyEKSVPC
+
+  HarveyEKSPublicRoute:
+    Type: AWS::EC2::Route
+    DependsOn: !Ref HarveyEKSInternetGatewayAttachment
+    Properties:
+      RouteTableId: !Ref HarveyEKSPublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref HarveyEKSInternetGateway
+
+  HarveyEKSPrivateSubnetRouteTableAssociationA:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref HarveyEKSPrivateSubnetA
+      RouteTableId: !Ref HarveyEKSPrivateRouteTable
+
+  HarveyEKSPublicSubnetRouteTableAssociationA:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref HarveyEKSPublicSubnetA
+      RouteTableId: !Ref HarveyEKSPublicRouteTable
+
+  # Cluster
   HarveyEKSCluster:
     Type: AWS::EKS::Cluster
     Properties:
@@ -15,10 +94,8 @@ Resources:
       RoleArn: !GetAtt HarveyEKSClusterRole.Arn
       ResourcesVpcConfig:
         SubnetIds:
-          - "subnet-07d382e3a5cc6e23f"
-          - "subnet-0fabb205d6946604c"
-        SecurityGroupIds:
-          - "sg-010ef08b4ab5c360a"
+          - !Ref HarveyEKSPrivateSubnetA
+          - !Ref HarveyEKSPublicSubnetA
         EndpointPrivateAccess: true
         EndpointPublicAccess: true
 
@@ -32,8 +109,8 @@ Resources:
       NodegroupName: harvey-eks-cluster-nodegroup
       NodeRole: "arn:aws:iam::527728718473:role/AmazonEKSNodeRole"
       Subnets:
-        - "subnet-07d382e3a5cc6e23f"
-        - "subnet-0fabb205d6946604c"
+        - !Ref HarveyEKSPrivateSubnetA
+        - !Ref HarveyEKSPublicSubnetA
       ScalingConfig:
         DesiredSize: 1
         MaxSize: 1
